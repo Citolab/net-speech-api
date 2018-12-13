@@ -40,7 +40,9 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 
 		@Override
 		public void onError(Exception arg0) {
-			
+			for (RecognitionEventListener listener : recognitionEventListeners) {
+				listener.onError();
+			}
 		}
 
 		@Override
@@ -55,7 +57,9 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 
 		@Override
 		public void onOpen(ServerHandshake arg0) {
-			
+			for (RecognitionEventListener listener : recognitionEventListeners) {
+				listener.onOpen();
+			}
 		}
 		
 	}
