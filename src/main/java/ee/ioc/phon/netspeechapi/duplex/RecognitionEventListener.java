@@ -1,5 +1,7 @@
 package ee.ioc.phon.netspeechapi.duplex;
 
+import org.java_websocket.handshake.ServerHandshake;
+
 public interface RecognitionEventListener {
 
 	void onRecognitionEvent(RecognitionEvent event);
