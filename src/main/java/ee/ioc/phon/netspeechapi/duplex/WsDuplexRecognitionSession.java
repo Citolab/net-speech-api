@@ -34,14 +34,14 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 		@Override
 		public void onClose(int code, String reason, boolean remote) {
 			for (RecognitionEventListener listener : recognitionEventListeners) {
-				listener.onClose();
+				listener.onClose(code, reason, remote);
 			}
 		}
 
 		@Override
 		public void onError(Exception arg0) {
 			for (RecognitionEventListener listener : recognitionEventListeners) {
-				listener.onError();
+				listener.onError(arg0);
 			}
 		}
 
@@ -58,7 +58,7 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 		@Override
 		public void onOpen(ServerHandshake arg0) {
 			for (RecognitionEventListener listener : recognitionEventListeners) {
-				listener.onOpen();
+				listener.onOpen(arg0);
 			}
 		}
 		
