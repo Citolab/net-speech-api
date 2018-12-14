@@ -76,7 +76,7 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 		this.parameters.put("content-type", "audio/x-raw, layout=(string)interleaved, rate=(int)16000, format=(string)S16LE, channels=(int)1");
 	}
 
-	public void connect() throws IOException {
+	public void connect() {
 		String parameterString = "";
 		
 		if (parameters != null) {
@@ -86,7 +86,13 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 				} else {
 					parameterString += "&";
 				}
-				parameterString +=  URLEncoder.encode(entry.getKey() + "=" + entry.getValue(), "UTF-8");
+				try {
+					parameterString +=  URLEncoder.encode(entry.getKey() + "=" + entry.getValue(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					for (RecognitionEventListener listener : recognitionEventListeners) {
+						listener.onError(e);
+					}
+				}
 			}
 		}
 		

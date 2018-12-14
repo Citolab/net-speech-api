@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface DuplexRecognitionSession {
 
-	void connect() throws IOException;
+	void connect();
 	
 	void sendChunk(byte[] bytes, boolean isLast) throws IOException;
 	
