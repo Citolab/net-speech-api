@@ -96,10 +96,10 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 			wsClient = new MyWsClient(serverURI);
 			
 			wsClient.connectBlocking();
-		} catch (URISyntaxException e) {
-			throw new IOException(e);
-		} catch (InterruptedException e) {
-			throw new IOException(e);
+		} catch (URISyntaxException | InterruptedException e) {
+			for (RecognitionEventListener listener : recognitionEventListeners) {
+				listener.onError(e);
+			}
 		}
 		
 	}
