@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -117,10 +118,15 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 	}
 
 	public void sendChunk(byte[] bytes, boolean isLast) throws IOException {
-		// FIXME: check if connected?
-		wsClient.send(bytes);
-		if (isLast) {
-			wsClient.send("EOS");
+		try {
+			wsClient.send(bytes);
+			if (isLast) {
+				wsClient.send("EOS");
+			}
+		} catch (NotYetConnectedException exception) {
+			for (RecognitionEventListener listener : recognitionEventListeners) {
+				listener.onError(exception);
+			}
 		}
 	}
 	
