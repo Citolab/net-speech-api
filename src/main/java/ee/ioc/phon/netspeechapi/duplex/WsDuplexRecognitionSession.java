@@ -117,7 +117,7 @@ public class WsDuplexRecognitionSession implements DuplexRecognitionSession {
 		recognitionEventListeners.add(recognitionEventListener);
 	}
 
-	public void sendChunk(byte[] bytes, boolean isLast) throws IOException {
+	public void sendChunk(byte[] bytes, boolean isLast) {
 		try {
 			wsClient.send(bytes);
 			if (isLast) {
